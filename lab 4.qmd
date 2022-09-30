@@ -1,0 +1,141 @@
+---
+title: "Lab 4"
+author: "Leah Marville"
+format: html
+editor: visual
+theme: minty
+---
+
+###### Question
+
+::: question
+Load the `mosaicData` R package in your Quarto document, and then visit the documentation page for the `SaratogaHouses` data set. 
+:::
+
+```{r}
+library(mosaicData)
+```
+
+
+
+###### Question
+
+::: question
+Import the Saratoga Houses data set into your environment using the command `SaratogaHouses <- mosaicData::SaratogaHouses` in your Quarto document.
+Use `nrow()` to compute the number of rows in `SaratogaHouses`. 
+:::
+
+```{r}
+SaratogaHouses <- mosaicData::SaratogaHouses
+nrow(SaratogaHouses)
+```
+
+
+###### Question
+
+::: question
+How old was a "typical" home in Saratoga County during 2006?. To find out, use `summarize()` to compute the median *age* of all the homes in the `SaratogaHouses` data set. 
+Be sure to think about what "ingredients" you need to supply for your code to work!
+:::
+
+```{r}
+library(tidyverse)
+
+SaratogaHouses |>
+  summarize(median_age = median(age))
+```
+
+
+
+###### Question
+
+::: question
+What was the average amount of living space of a home for sale in Saratoga County during 2006? 
+Write your own code "from scratch" to compute this summary. 
+
+Be sure to think about:
+
+1. What variable in the data set measures home size?
+2. What function in R calculates the average?
+3. What are the units in the output
+4. What a good name for your summary would be!
+:::
+
+```{r}
+library(tidyverse)
+
+SaratogaHouses |>
+  summarize(avg_livingArea = mean(livingArea))
+
+```
+
+
+###### Question
+
+::: question
+Does the price of a home depend on the type of heating system it has?
+To find out, copy the incomplete code below into your Quarto document, and edit it to compute the median price of all a homes, taking into the type of heating system the home has. 
+Be sure to look back at the variables in the data set to figure out which one can tell you what type of heating system a home uses.
+:::
+
+
+```{r}
+#| eval: false
+#| code-fold: false
+SaratogaHouses |>
+  group_by(heating) |>
+  summarize(median_price = median(price))
+```
+
+###### Question
+
+::: question
+How does the average size of a home depend on the number of bedrooms in the home? Write your own code "from scratch" to compute this summary.
+Be sure to think about 
+
+1) Which variable should be the "grouping" variable (i.e., which variable you should look at to figure out which group a home belongs to) and 
+2) Which variable should be the summarized variable?
+
+:::
+
+```{r}
+
+SaratogaHouses |>
+  group_by(bedrooms) |>
+  summarize(average_lotSize = mean(lotSize))
+```
+
+
+
+###### Question
+
+::: question
+Get some practice using the `n()` function to summarize the frequency of different category values by copying the incomplete code below into your Quarto document, and editing it to figure out how many homes use electric, gas, or oil as their heating fuel.
+Be sure to look back in the documentation for the `SaratogaHouses` data set to figure out which variable measures what kind of fuel a home uses, so you know which variable to group the data by!
+:::
+
+
+```{r}
+#| eval: false
+#| code-fold: false
+SaratogaHouses |>
+  group_by(fuel) |>
+  summarize(
+    num_homes = n()
+    )
+```
+
+###### Question
+
+::: question
+Write your own code "from scratch" to calculate how many homes in the data set do and do not have a waterfront on their property.
+:::
+
+```{r}
+SaratogaHouses |>
+  group_by(waterfront) |>
+  summarize(
+    num_waterfront = n()
+  )
+```
+
